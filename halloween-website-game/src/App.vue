@@ -1,18 +1,14 @@
 <template>
-  <main>
-    <h1>Hello World</h1>
-  </main>
+  <HeaderNavigation></HeaderNavigation>
+
 </template>
 
 <script setup>
-  console.log('test')
+import HeaderNavigation from './components/HeaderNavigation.vue'
+
+
 </script>
 
 <style lang="scss">
-  main {
-    h1 {
-      color: red !important;
-    }
-  }
-
+  @import './assets/style.scss';
 </style>

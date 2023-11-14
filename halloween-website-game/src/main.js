@@ -1,4 +1,5 @@
-import './assets/main.css'
+import './assets/main.scss'
+import 'remixicon/fonts/remixicon.css';
 
 import { createApp } from 'vue'
 import App from './App.vue'

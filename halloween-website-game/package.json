@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "remixicon": "^3.5.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
