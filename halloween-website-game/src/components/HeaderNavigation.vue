@@ -30,11 +30,12 @@ import { ref } from 'vue';
 
 // Menu Navigation
 const isOpen = ref(false);
+
+// List Navigation
 const navLinks = [
-    {text: 'Accueil'},
-    {text: 'À Propos'},
+
     {text: 'Jeu'},
-    {text: 'Contact'},
+    {text: 'À Propos'},
 ]
 
 const toggleNav = () => {
@@ -59,9 +60,6 @@ const closeNav = () => {
     z-index: var(--z-fixed);
     transition: background-color .3s;
 
-    .show-menu {
-        top: 0;
-    }
     .nav {
         height: var(--header-height);
         display: flex;
@@ -77,28 +75,6 @@ const closeNav = () => {
             &:hover {
                 text-shadow: 0 2px 8px var(--first-color);
             }
-
-        }
-
-        &__toggle, &__close {
-            display: flex;
-            font-size: 1.25rem;
-            cursor: pointer;
-        }
-    }
-}
-
-// Responsive Navigation
-@media screen and (max-width: 1150px) {
-    .nav {
-        &__menu {
-            position: fixed;
-            top: -100%;
-            left: 0;
-            background-color: var(--black-color);
-            width: 100%;
-            padding-block: 5rem 4.5rem;
-            transition: top .5s;
         }
 
         &__list {
@@ -106,10 +82,6 @@ const closeNav = () => {
             flex-direction: column;
             text-align: center;
             row-gap: 3rem;
-        }
-
-        &__item {
-
         }
 
         &__link {
@@ -122,12 +94,85 @@ const closeNav = () => {
             }
         }
 
-        &__close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
+        &__toggle, &__close {
+            display: flex;
+            font-size: 1.25rem;
+            cursor: pointer;
         }
     }
+}
+
+.show-menu {
+    top: 0 !important;
+}
+
+// Responsive Navigation
+@media screen and (max-width: 1150px) {
+    .header {
+        .nav {
+            &__menu {
+                position: fixed;
+                top: -100%;
+                left: 0;
+                background-color: var(--black-color);
+                width: 100%;
+                padding-block: 5rem 4.5rem;
+                transition: top .5s;
+            }
+
+            &__close {
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
+            }
+        }
+    }
+}
+
+// Small Screen
+@media screen and (max-width: 330px) {
+    .header {
+        .container {
+            margin-inline: 1rem;
+        }
+    }
+}
+
+// Medium Screen
+@media screen and (min-width: 576px) {
+    // Nothing...
+}
+
+
+// Large Screen
+@media screen and (min-width: 968px) {
+    // Nothing...
+}
+
+@media screen and (min-width: 1150px) {
+    .header {
+        .container {
+            margin-inline: auto;
+        }
+
+        .nav {
+            height: calc(var(--header-height) + 2rem);
+
+            &__toggle, &__close {
+                display: none;
+            }
+
+            &__list {
+                flex-direction: row;
+                column-gap: 4rem;
+            }
+        }
+    }
+}
+
+// Largest Screen > 2k
+@media screen and (min-width: 2048px) {
+    // Nothing...
 }
 
 </style>
