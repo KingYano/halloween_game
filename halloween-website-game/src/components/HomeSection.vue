@@ -23,7 +23,7 @@
 
             <a href="" class="home__button">
                 <img src="../assets/image/button.svg" alt="image">
-                <span>Cliquez ici</span>
+                <span>JOUER</span>
             </a>
         </div>
 
