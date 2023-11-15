@@ -4,7 +4,7 @@
             <div v-if="!isGameOver && gameStarted" id="scoreDisplay">{{ score }}</div>
             <button class="game-info__pause" id="pauseButton" v-if="!isGameOver && gameStarted" @click="togglePause">{{ isPaused ? 'Reprendre' : 'Pause' }}</button>
         </div>
-        <div id="loading-message" v-if="!gameStarted">Appuyez sur Espace <span class="game-icon"><i class="ri-space"></i></span> ou la flèche vers le haut <span class="game-icon"><i class="ri-arrow-up-line"></i></span> pour commencer</div>
+        <div class="start-text" id="loading-message" v-if="!gameStarted">Appuyez sur Espace <span class="game-icon"><i class="ri-space"></i></span> ou la flèche vers le haut <span class="game-icon"><i class="ri-arrow-up-line"></i></span> pour commencer</div>
         <div class="game-over">
             <button class="game-over__button" id="restartButton" @click="restartGame" v-if="isGameOver">Relancer</button>
             <h2 class="game-over__title" id="gameOverMessage" v-if="isGameOver">GAME OVER</h2>
@@ -250,5 +250,21 @@ watch(isGameOver, (newVal) => {
 
 .game-icon {
     border: solid 1px;
+}
+
+.start-text {
+    text-align: center;
+    padding-top: 25px;
+    font-size: 1.5rem;
+    animation-duration: 1.5s;
+    animation-name: clignoter;
+    animation-iteration-count: infinite;
+    transition: none;
+}
+
+@keyframes clignoter {
+  0%   { opacity:1; }
+  40%   {opacity:0; }
+  100% { opacity:1; }
 }
 </style>
