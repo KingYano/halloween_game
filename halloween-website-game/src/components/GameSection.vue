@@ -1,18 +1,21 @@
 <template>
     <div class="game-container" ref="gameContainer">
-        <div id="loading-message" v-show="!gameStarted">Appuyez sur Espace ou la flèche vers le haut pour commencer</div>
-        <div id="pauseButton" @click="togglePause">{{ isPaused ? 'Reprendre' : 'Pause' }}</div>
-        <div id="scoreDisplay">{{ score }}</div>
-        <button id="restartButton" @click="restartGame" v-show="isGameOver">Relancer</button>
+        <div id="loading-message" v-if="!gameStarted">Appuyez sur Espace ou la flèche vers le haut pour commencer</div>
+        <div id="pauseButton" v-if="!isGameOver && gameStarted" @click="togglePause">{{ isPaused ? 'Reprendre' : 'Pause' }}</div>
+        <div class="game-data">
+            <div id="scoreDisplay">{{ score }}</div>
+            <button id="restartButton" @click="restartGame" v-if="isGameOver">Relancer</button>
+            <div id="gameOverMessage" v-if="isGameOver">Game Over</div>
+        </div>
         <div id="cube" :style="{ bottom: cubeBottom + 'px' }"></div>
         <div id="obstacles">
-            <div v-for="obstacle in obstacles" :key="obstacle.id" :class="['obstacle', obstacle.type, { 'paused': isPaused }]" :style="{ left: obstacle.left + 'px', height: obstacle.height }"></div>
+            <div v-for="obstacle in obstacles" :key="obstacle.id" :class="['obstacle', obstacle.type, { 'paused': isPaused }]" :style="{ left: obstacle.left + 'px', height: obstacle.height, width: obstacle.width }"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const gameContainer = ref(null);
 const gameStarted = ref(false);
@@ -25,8 +28,8 @@ let gameInterval, scoreInterval, obstacleSpeed = 2, obstacleCount = 0, jumping =
 
 const startGame = () => {
     gameStarted.value = true;
-    gameInterval = setInterval(createObstacle, 2500);
-    scoreInterval = setInterval(updateScore, 100);
+    scoreInterval = setInterval(updateScore, 500);
+    requestAnimationFrame(gameLoop);
 };
 
 const jump = () => {
@@ -54,25 +57,49 @@ const updateJump = (currentTime) => {
 
 const createObstacle = () => {
     if (!isPaused.value && !isGameOver.value) {
-        const obstacle = { id: obstacleCount++, left: gameContainer.value.clientWidth, height: Math.random() < 0.5 ? '30px' : '50px', type: Math.random() < 0.5 ? 'pumpkin' : 'funerary-stone' };
+        const isPumpkin = Math.random() < 0.5;
+        const obstacle = {
+            id: obstacleCount++,
+            left: gameContainer.value.clientWidth,
+            height: isPumpkin ? '30px' : '41px',
+            width: isPumpkin ? '34px' : '27px',
+            type: isPumpkin ? 'pumpkin' : 'funerary-stone'
+        };
         obstacles.value.push(obstacle);
-        nextTick(() => {
-            moveObstacle(obstacle);
-        });
     }
 };
 
-const moveObstacle = (obstacle) => {
-    const move = setInterval(() => {
-        if (!isPaused.value) {
-            obstacle.left -= obstacleSpeed;
-            checkCollision(obstacle);
-            if (obstacle.left <= -125) {
-                clearInterval(move);
-                obstacles.value = obstacles.value.filter(o => o.id !== obstacle.id);
+let lastObstacleCreationTime = 0;
+const obstacleCreationInterval = 2100;
+
+let lastFrameTime = 0;
+const frameRate = 60;
+const frameInterval = 1000 / frameRate;
+
+const gameLoop = (currentTime) => {
+    const delta = currentTime - lastFrameTime;
+    if (delta > frameInterval) {
+        if (!isPaused.value && !isGameOver.value) {
+            moveObstacles();
+            if (currentTime - lastObstacleCreationTime > obstacleCreationInterval) {
+                createObstacle();
+                lastObstacleCreationTime = currentTime;
             }
         }
-    }, 5);
+        lastFrameTime = currentTime - (delta % frameInterval);
+    }
+    requestAnimationFrame(gameLoop);
+};
+
+
+const moveObstacles = () => {
+    obstacles.value.forEach(obstacle => {
+        obstacle.left -= obstacleSpeed;
+        checkCollision(obstacle);
+        if (obstacle.left <= -125) {
+            obstacles.value = obstacles.value.filter(o => o.id !== obstacle.id);
+        }
+    });
 };
 
 const checkCollision = (obstacle) => {
@@ -93,7 +120,6 @@ const updateScore = () => {
 const gameOver = () => {
     isGameOver.value = true;
     isPaused.value = true;
-    clearInterval(gameInterval);
     clearInterval(scoreInterval);
 };
 
@@ -120,7 +146,7 @@ const togglePause = () => {
                 startTime += performance.now() - pauseTime;
                 requestAnimationFrame(updateJump);
             }
-            scoreInterval = setInterval(updateScore, 100);
+            scoreInterval = setInterval(updateScore, 500);
         }
     }
 };
@@ -139,7 +165,6 @@ onMounted(() => {
 
 watch(isGameOver, (newVal) => {
     if (newVal) {
-        clearInterval(gameInterval);
         clearInterval(scoreInterval);
     }
 });
@@ -150,7 +175,7 @@ watch(isGameOver, (newVal) => {
     position: relative;
     width: 60%;
     height:40%;
-    background: #87CEEB;
+    background: #02254b;
     overflow: hidden;
 }
 
@@ -167,7 +192,6 @@ watch(isGameOver, (newVal) => {
 
 .obstacle {
     position: absolute;
-    width: 34px;
     bottom: 0;
     right: 0;
 }
@@ -181,5 +205,14 @@ watch(isGameOver, (newVal) => {
 .funerary-stone {
     background-image: url('../assets/image/game/funerary-stone.png');
     background-size: cover;
+}
+
+.game-data {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 15px;
 }
 </style>
