@@ -33,7 +33,6 @@ const isOpen = ref(false);
 
 // List Navigation
 const navLinks = [
-
     {text: 'Jeu'},
     {text: 'À Propos'},
 ]
@@ -59,6 +58,7 @@ const closeNav = () => {
     background: transparent;
     z-index: var(--z-fixed);
     transition: background-color .3s;
+    z-index: 1;
 
     .nav {
         height: var(--header-height);

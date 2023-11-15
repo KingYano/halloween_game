@@ -21,30 +21,40 @@
                 Le jeu "Des bonbons ou un sort" est un jeu de course simple où le joueur contrôle un fantôme qui doit éviter des obstacles tels que des citrouilles et des pierres tombales. Le jeu gagne en vitesse et en difficulté au fil du temps.
             </p>
 
-            <a href="" class="home__button">
+            <a v-on:click="handlePlayClick" class="home__button">
                 <img src="../assets/image/button.svg" alt="image">
                 <span>JOUER</span>
             </a>
         </div>
-
     </section>
+    <GameModal v-if="showModal"></GameModal>
  </main>
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import {  onMounted } from 'vue';
+import GameModal from './GameModal.vue'
+
+// import { gsap } from 'gsap';
+import { ref, onMounted } from 'vue';
+const showModal = ref(false);
+console.log('1', showModal)
+function handlePlayClick() {
+    console.log('mdr')
+    showModal.value = true;
+console.log('2', showModal)
+
+}
 
 onMounted(() => {
-  gsap.from('.home__shadow', 1.5, {opacity: 0, y: -300, delay: .2});
-  gsap.from('.home__points', 1.5, {opacity: 0, y: -300, delay: .4});
-  gsap.from('.home__grass', 1.5, {opacity: 0, y: 300, delay: .2, ease: 'elastic.out(1, .5)'});
-  gsap.from('.home__pumpkin', 1.5, {opacity: 0, y: -300, delay: .6, ease: 'bounce.out'});
-  gsap.from('.home__stones', 1.5, {opacity: 0, y: 300, delay: .8, ease: 'elastic.out(1, .5)'});
-  gsap.from('.home__moon', 1.5, {opacity: 0, y: 300, delay: 1.5, ease: 'elastic.out(1, .5)'});
-  gsap.from('.home__titles', 1.5, {opacity: 0, y: -300, delay: 1.5, ease: 'elastic.out(1, .5)'});
-  gsap.from('.home__trees', 1.5, {opacity: 0, y: 300, delay: 2, ease: 'elastic.out(1, .5)'});
-  gsap.from('.home__data', 1.5, {opacity: 0, y: 200, delay: 2, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__shadow', 1.5, {opacity: 0, y: -300, delay: .2});
+//   gsap.from('.home__points', 1.5, {opacity: 0, y: -300, delay: .4});
+//   gsap.from('.home__grass', 1.5, {opacity: 0, y: 300, delay: .2, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__pumpkin', 1.5, {opacity: 0, y: -300, delay: .6, ease: 'bounce.out'});
+//   gsap.from('.home__stones', 1.5, {opacity: 0, y: 300, delay: .8, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__moon', 1.5, {opacity: 0, y: 300, delay: 1.5, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__titles', 1.5, {opacity: 0, y: -300, delay: 1.5, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__trees', 1.5, {opacity: 0, y: 300, delay: 2, ease: 'elastic.out(1, .5)'});
+//   gsap.from('.home__data', 1.5, {opacity: 0, y: 200, delay: 2, ease: 'elastic.out(1, .5)'});
 });
 
 
@@ -142,6 +152,7 @@ onMounted(() => {
         position: relative;
         place-items: center;
         transition: filter .4s;
+        cursor: pointer;
 
         span {
             position: absolute;
@@ -154,6 +165,16 @@ onMounted(() => {
             filter: drop-shadow(0 4px 15px hsla(185, 100%, 48%, .6));
         }
     }
+}
+
+.game {
+    padding-block: 150px;
+    background: red;
+    // height: 374px;
+    // width: 864px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 // Small Screen
