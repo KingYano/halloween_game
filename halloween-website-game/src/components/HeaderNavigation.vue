@@ -2,7 +2,7 @@
   <header class="header" id="header">
     <nav class="nav container">
         <a href="#" class="nav__logo">
-            Halloween
+            HALLOWEEN
         </a>
 
         <div class="nav__menu" :class="isOpen === true ? 'show-menu' : ''" id="nav-menu">
