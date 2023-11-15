@@ -1,11 +1,13 @@
 <template>
     <div class="game-container" ref="gameContainer">
-        <div id="loading-message" v-if="!gameStarted">Appuyez sur Espace ou la flèche vers le haut pour commencer</div>
-        <div id="pauseButton" v-if="!isGameOver && gameStarted" @click="togglePause">{{ isPaused ? 'Reprendre' : 'Pause' }}</div>
-        <div class="game-data">
-            <div id="scoreDisplay">{{ score }}</div>
-            <button id="restartButton" @click="restartGame" v-if="isGameOver">Relancer</button>
-            <div id="gameOverMessage" v-if="isGameOver">Game Over</div>
+        <div class="game-info">
+            <div v-if="!isGameOver && gameStarted" id="scoreDisplay">{{ score }}</div>
+            <button class="game-info__pause" id="pauseButton" v-if="!isGameOver && gameStarted" @click="togglePause">{{ isPaused ? 'Reprendre' : 'Pause' }}</button>
+        </div>
+        <div id="loading-message" v-if="!gameStarted">Appuyez sur Espace <span class="game-icon"><i class="ri-space"></i></span> ou la flèche vers le haut <span class="game-icon"><i class="ri-arrow-up-line"></i></span> pour commencer</div>
+        <div class="game-over">
+            <button class="game-over__button" id="restartButton" @click="restartGame" v-if="isGameOver">Relancer</button>
+            <h2 class="game-over__title" id="gameOverMessage" v-if="isGameOver">GAME OVER</h2>
         </div>
         <div id="cube" :style="{ bottom: cubeBottom + 'px' }"></div>
         <div id="obstacles">
@@ -24,11 +26,11 @@ const isGameOver = ref(false);
 const score = ref(0);
 const obstacles = ref([]);
 const cubeBottom = ref(0);
-let gameInterval, scoreInterval, obstacleSpeed = 2, obstacleCount = 0, jumping = false, startTime, pauseTime, duration = 800;
+let scoreInterval, obstacleSpeed = 5, obstacleCount = 0, jumping = false, startTime, pauseTime, duration = 800;
 
 const startGame = () => {
     gameStarted.value = true;
-    scoreInterval = setInterval(updateScore, 500);
+    scoreInterval = setInterval(updateScore, 250);
     requestAnimationFrame(gameLoop);
 };
 
@@ -112,8 +114,10 @@ const checkCollision = (obstacle) => {
 
 const updateScore = () => {
     score.value++;
-    if (score.value % 150 === 0) {
-        obstacleSpeed++;
+    if (score.value % 100 === 0) {
+        obstacleSpeed += 1;
+        clearInterval(scoreInterval);
+        scoreInterval = setInterval(updateScore, 250 - score.value / 100);
     }
 };
 
@@ -130,7 +134,7 @@ const restartGame = () => {
     cubeBottom.value = 0;
     obstacles.value = [];
     score.value = 0;
-    obstacleSpeed = 2;
+    obstacleSpeed = 5;
     obstacleCount = 0;
     startGame();
 };
@@ -146,7 +150,7 @@ const togglePause = () => {
                 startTime += performance.now() - pauseTime;
                 requestAnimationFrame(updateJump);
             }
-            scoreInterval = setInterval(updateScore, 500);
+            scoreInterval = setInterval(updateScore, 250);
         }
     }
 };
@@ -207,12 +211,44 @@ watch(isGameOver, (newVal) => {
     background-size: cover;
 }
 
-.game-data {
+.game-over {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 75%;
     align-items: center;
     justify-content: center;
     grid-gap: 15px;
+    padding: 35px;
+
+    &__button {
+        font-size: 1rem;
+        padding: 5px;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    &__title {
+        color: var(--white-color);
+        font-family: var(--second-font);
+        font-size: var(--h2-font-size);
+        letter-spacing: 6px;
+    }
+
+}
+
+.game-info {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+
+    &__pause {
+        padding: 4px;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+}
+
+.game-icon {
+    border: solid 1px;
 }
 </style>
