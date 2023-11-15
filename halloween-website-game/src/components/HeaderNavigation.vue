@@ -39,7 +39,6 @@ const navLinks = [
 
 const toggleNav = () => {
     isOpen.value =!isOpen.value;
-    console.log('isOpen action', isOpen)
 }
 
 const closeNav = () => {

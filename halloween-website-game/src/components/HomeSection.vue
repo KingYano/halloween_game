@@ -27,7 +27,7 @@
             </a>
         </div>
     </section>
-    <GameModal v-if="showModal"></GameModal>
+    <GameModal v-if="showModal" v-on:close="handleModalClose"></GameModal>
  </main>
 </template>
 
@@ -36,14 +36,16 @@ import GameModal from './GameModal.vue'
 
 // import { gsap } from 'gsap';
 import { ref, onMounted } from 'vue';
-const showModal = ref(false);
-console.log('1', showModal)
-function handlePlayClick() {
-    console.log('mdr')
-    showModal.value = true;
-console.log('2', showModal)
 
+const showModal = ref(false);
+
+function handlePlayClick() {
+    showModal.value = true;
 }
+
+const handleModalClose = () => {
+    showModal.value = false;
+};
 
 onMounted(() => {
 //   gsap.from('.home__shadow', 1.5, {opacity: 0, y: -300, delay: .2});
@@ -170,8 +172,6 @@ onMounted(() => {
 .game {
     padding-block: 150px;
     background: red;
-    // height: 374px;
-    // width: 864px;
     display: flex;
     justify-content: center;
     align-items: center;
