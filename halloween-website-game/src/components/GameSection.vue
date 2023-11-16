@@ -8,6 +8,7 @@
         <div class="game-over">
             <button class="game-over__button" id="restartButton" @click="restartGame" v-if="isGameOver">Relancer</button>
             <h2 class="game-over__title" id="gameOverMessage" v-if="isGameOver">GAME OVER</h2>
+            <div v-if="isGameOver" id="scoreDisplay">score : {{ score }}</div>
         </div>
         <div id="cube" :style="{ bottom: cubeBottom + 'px' }"></div>
         <div id="obstacles">
@@ -177,7 +178,7 @@ watch(isGameOver, (newVal) => {
 <style lang="scss">
 .game-container {
     position: relative;
-    width: 60%;
+    width: 55%;
     height:40%;
     background: #02254b;
     overflow: hidden;
@@ -254,8 +255,9 @@ watch(isGameOver, (newVal) => {
 
 .start-text {
     text-align: center;
-    padding-top: 25px;
-    font-size: 1.5rem;
+    padding: 25px;
+    font-size: 1rem;
+    line-height: 1.5;
     animation-duration: 1.5s;
     animation-name: clignoter;
     animation-iteration-count: infinite;

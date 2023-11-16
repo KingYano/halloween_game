@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__game">
+  <div class="modal__game XD">
     <div class="modal__close" v-on:click="closeModal">
         <i class="ri-close-line"></i>
     </div>
@@ -14,7 +14,7 @@ import { defineEmits  } from 'vue';
 const emits = defineEmits(['close']);
 
 const closeModal = () => {
-    emits('close'); // Émettre l'événement
+    emits('close');
 };
 </script>
 
@@ -24,7 +24,7 @@ const closeModal = () => {
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background: rgba( 0, 0, 0, .5);
     display: flex;
     justify-content: center;

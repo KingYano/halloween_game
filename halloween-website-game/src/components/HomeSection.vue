@@ -32,20 +32,31 @@
 </template>
 
 <script setup>
-import GameModal from './GameModal.vue'
-
-// import { gsap } from 'gsap';
-import { ref, onMounted } from 'vue';
+import GameModal from './GameModal.vue';
+import { ref, watch, onMounted } from 'vue';
 
 const showModal = ref(false);
 
+const scrollToTop = () => {
+    window.scrollTo(0, 0);
+};
+
 function handlePlayClick() {
     showModal.value = true;
+    scrollToTop();
 }
 
 const handleModalClose = () => {
     showModal.value = false;
 };
+
+watch(showModal, (newValue) => {
+    if (newValue) {
+        document.body.style.overflowY = 'hidden';
+    } else {
+        document.body.style.overflowY = 'auto';
+    }
+});
 
 onMounted(() => {
 //   gsap.from('.home__shadow', 1.5, {opacity: 0, y: -300, delay: .2});
@@ -167,14 +178,6 @@ onMounted(() => {
             filter: drop-shadow(0 4px 15px hsla(185, 100%, 48%, .6));
         }
     }
-}
-
-.game {
-    padding-block: 150px;
-    background: red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 // Small Screen

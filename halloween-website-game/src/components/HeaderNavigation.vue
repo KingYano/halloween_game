@@ -8,7 +8,7 @@
         <div class="nav__menu" :class="isOpen === true ? 'show-menu' : ''" id="nav-menu">
             <ul class="nav__list">
                 <li v-for="link in navLinks" :key="link.text" class="nav__item">
-                    <a href="#" v-on:click="closeNav" class="nav__link">{{ link.text }}</a>
+                    <a v-on:click="onGameLinkClicked(link.text)" class="nav__link">{{ link.text }}</a>
                 </li>
             </ul>
 
@@ -25,26 +25,39 @@
 </template>
 
 <script setup>
+import { ref, watch, defineEmits } from 'vue';
 
-import { ref } from 'vue';
-
-// Menu Navigation
 const isOpen = ref(false);
-
-// List Navigation
+const showModal = ref(false);
 const navLinks = [
-    {text: 'Jeu'},
-    {text: 'À Propos'},
-]
+    { text: 'Jeu' },
+    { text: 'À Propos' }
+];
+const emits = defineEmits(['gameClicked']);
 
 const toggleNav = () => {
-    isOpen.value =!isOpen.value;
-}
-
-const closeNav = () => {
-    isOpen.value = false;
+  isOpen.value = !isOpen.value;
 };
 
+const closeNav = () => {
+  isOpen.value = false;
+};
+
+const onGameLinkClicked = (linkText) => {
+    if (linkText === 'Jeu') {
+        showModal.value = true;
+        emits('gameClicked');
+        closeNav();
+    }
+};
+
+watch(showModal, (newValue) => {
+    if (newValue) {
+        document.body.style.overflowY = 'hidden';
+    } else {
+        document.body.style.overflowY = 'auto';
+    }
+});
 </script>
 
 <style lang="scss">
@@ -87,6 +100,7 @@ const closeNav = () => {
             color: var(--white-color);
             font-weight: var(--font-medium);
             transition: text-shadow .3s;
+            cursor: pointer;
 
             &:hover {
                 text-shadow: 0 2px 8px var(--first-color);
