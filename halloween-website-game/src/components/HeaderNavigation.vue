@@ -47,8 +47,13 @@ const onGameLinkClicked = (linkText) => {
     if (linkText === 'Jeu') {
         showModal.value = true;
         emits('gameClicked');
+        scrollToTop();
         closeNav();
     }
+};
+
+const scrollToTop = () => {
+    window.scrollTo(0, 0);
 };
 
 watch(showModal, (newValue) => {
