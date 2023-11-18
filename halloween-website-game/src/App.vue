@@ -12,7 +12,6 @@ import { ref } from 'vue';
 
 const showGameModal = ref(false);
 const currentSection = ref('game');
-console.log('mdr', currentSection.value);
 
 const toggleGameModal = () => {
   currentSection.value = 'game';
@@ -26,8 +25,6 @@ const toggleGameModal = () => {
 
 const handleSectionSelected = (section) => {
     currentSection.value = section;
-  console.log('mdr222', currentSection.value);
-
     showGameModal.value = true;
 };
 

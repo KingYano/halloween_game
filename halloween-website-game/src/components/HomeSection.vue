@@ -36,8 +36,6 @@ import GameModal from './GameModal.vue';
 import { ref, watch, onMounted } from 'vue';
 
 const showModal = ref(false);
-    console.log('showModal', showModal)
-
 
 const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -45,7 +43,6 @@ const scrollToTop = () => {
 
 function handlePlayClick() {
     showModal.value = true;
-    console.log('showModal aprs clic', showModal)
     scrollToTop();
 }
 
