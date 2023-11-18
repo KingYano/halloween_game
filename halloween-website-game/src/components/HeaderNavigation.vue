@@ -25,168 +25,166 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+    import { ref } from 'vue';
 
-const isOpen = ref(false);
+    const isOpen = ref(false);
 
-const navLinks = [
-    { text: 'Jeu' },
-    { text: 'À Propos' }
-];
-const emits = defineEmits(['gameClicked']);
+    const navLinks = [
+        { text: 'Jeu' },
+        { text: 'À Propos' }
+    ];
+    const emits = defineEmits(['gameClicked']);
 
-const toggleNav = () => {
-  isOpen.value = !isOpen.value;
-};
+    const toggleNav = () => {
+    isOpen.value = !isOpen.value;
+    };
 
-const closeNav = () => {
-  isOpen.value = false;
-};
+    const closeNav = () => {
+    isOpen.value = false;
+    };
 
-const onGameLinkClicked = (linkText) => {
-    if (linkText === 'Jeu') {
-        emits('gameClicked');
-        scrollToTop();
-        closeNav();
-    } else {
-        emits('sectionSelected', 'about');
-        scrollToTop();
-        closeNav();
-    }
-};
+    const onGameLinkClicked = (linkText) => {
+        if (linkText === 'Jeu') {
+            emits('gameClicked');
+            scrollToTop();
+            closeNav();
+        } else {
+            emits('sectionSelected', 'about');
+            scrollToTop();
+            closeNav();
+        }
+    };
 
-const scrollToTop = () => {
-    window.scrollTo(0, 0);
-};
-
+    const scrollToTop = () => {
+        window.scrollTo(0, 0);
+    };
 </script>
 
 <style lang="scss">
-// Desktop Navigation
-.header {
-    position: fixed;
-    width: 100%;
-    top: 0%;
-    left: 0%;
-    background: transparent;
-    z-index: var(--z-fixed);
-    transition: background-color .3s;
-    z-index: 1;
-
-    .nav {
-        height: var(--header-height);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &__logo{
-            color: var(--white-color);
-            font-family: var(--second-font);
-            font-size: var(--h2-font-size);
-            transition: text-shadow .3s;
-
-            &:hover {
-                text-shadow: 0 2px 8px var(--first-color);
-            }
-        }
-
-        &__list {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            row-gap: 3rem;
-        }
-
-        &__link {
-            color: var(--white-color);
-            font-weight: var(--font-medium);
-            transition: text-shadow .3s;
-            cursor: pointer;
-
-            &:hover {
-                text-shadow: 0 2px 8px var(--first-color);
-            }
-        }
-
-        &__toggle, &__close {
-            display: flex;
-            font-size: 1.25rem;
-            cursor: pointer;
-        }
-    }
-}
-
-.show-menu {
-    top: 0 !important;
-}
-
-// Responsive Navigation
-@media screen and (max-width: 1150px) {
+    // Desktop Navigation
     .header {
-        .nav {
-            &__menu {
-                position: fixed;
-                top: -100%;
-                left: 0;
-                background-color: var(--black-color);
-                width: 100%;
-                padding-block: 5rem 4.5rem;
-                transition: top .5s;
-            }
-
-            &__close {
-                position: absolute;
-                top: 1rem;
-                right: 1.5rem;
-            }
-        }
-    }
-}
-
-// Small Screen
-@media screen and (max-width: 330px) {
-    .header {
-        .container {
-            margin-inline: 1rem;
-        }
-    }
-}
-
-// Medium Screen
-@media screen and (min-width: 576px) {
-    // Nothing...
-}
-
-
-// Large Screen
-@media screen and (min-width: 968px) {
-    // Nothing...
-}
-
-@media screen and (min-width: 1150px) {
-    .header {
-        .container {
-            margin-inline: auto;
-        }
+        position: fixed;
+        width: 100%;
+        top: 0%;
+        left: 0%;
+        background: transparent;
+        z-index: var(--z-fixed);
+        transition: background-color .3s;
+        z-index: 1;
 
         .nav {
-            height: calc(var(--header-height) + 2rem);
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            &__toggle, &__close {
-                display: none;
+            &__logo{
+                color: var(--white-color);
+                font-family: var(--second-font);
+                font-size: var(--h2-font-size);
+                transition: text-shadow .3s;
+
+                &:hover {
+                    text-shadow: 0 2px 8px var(--first-color);
+                }
             }
 
             &__list {
-                flex-direction: row;
-                column-gap: 4rem;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                row-gap: 3rem;
+            }
+
+            &__link {
+                color: var(--white-color);
+                font-weight: var(--font-medium);
+                transition: text-shadow .3s;
+                cursor: pointer;
+
+                &:hover {
+                    text-shadow: 0 2px 8px var(--first-color);
+                }
+            }
+
+            &__toggle, &__close {
+                display: flex;
+                font-size: 1.25rem;
+                cursor: pointer;
             }
         }
     }
-}
 
-// Largest Screen > 2k
-@media screen and (min-width: 2048px) {
-    // Nothing...
-}
+    .show-menu {
+        top: 0 !important;
+    }
 
+    // Responsive Navigation
+    @media screen and (max-width: 1150px) {
+        .header {
+            .nav {
+                &__menu {
+                    position: fixed;
+                    top: -100%;
+                    left: 0;
+                    background-color: var(--black-color);
+                    width: 100%;
+                    padding-block: 5rem 4.5rem;
+                    transition: top .5s;
+                }
+
+                &__close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1.5rem;
+                }
+            }
+        }
+    }
+
+    // Small Screen
+    @media screen and (max-width: 330px) {
+        .header {
+            .container {
+                margin-inline: 1rem;
+            }
+        }
+    }
+
+    // Medium Screen
+    @media screen and (min-width: 576px) {
+        // Nothing...
+    }
+
+
+    // Large Screen
+    @media screen and (min-width: 968px) {
+        // Nothing...
+    }
+
+    @media screen and (min-width: 1150px) {
+        .header {
+            .container {
+                margin-inline: auto;
+            }
+
+            .nav {
+                height: calc(var(--header-height) + 2rem);
+
+                &__toggle, &__close {
+                    display: none;
+                }
+
+                &__list {
+                    flex-direction: row;
+                    column-gap: 4rem;
+                }
+            }
+        }
+    }
+
+    // Largest Screen > 2k
+    @media screen and (min-width: 2048px) {
+        // Nothing...
+    }
 </style>
