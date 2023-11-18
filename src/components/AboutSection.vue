@@ -20,20 +20,21 @@
         &__card {
             height: 100%;
             width: 100%;
+            padding: 15px;
         }
 
         &__legal-right {
             font-size: 0.7rem;
-            padding-left: 15px;
         }
 
         &__info {
             height: 100%;
 
             &--contact {
-                height: 90%;
+                height: 80%;
                 display: flex;
-                gap: 80px;
+                flex-direction: column;
+                gap: 15px;
                 justify-content: center;
                 align-items: center;
 
@@ -51,6 +52,24 @@
 
                 i {
                     color: var(--white-color);
+                }
+            }
+        }
+    }
+
+
+    @media screen and (min-width: 1150px) {
+        .about {
+            &__info {
+                height: 100%;
+
+                &--contact {
+                    height: 90%;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 80px;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
         }

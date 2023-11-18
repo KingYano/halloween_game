@@ -41,8 +41,8 @@
       z-index: 2;
 
       &--about {
-        height: 250px;
-        width: 500px;
+        height: 30%;
+        width: 40%;
         background: hsl(210, 30%, 20%,);
         border-radius: 0.8rem;
       }
