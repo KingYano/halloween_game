@@ -43,7 +43,8 @@ const closeModal = () => {
     &--about {
       height: 250px;
       width: 500px;
-      background: red;
+      background: hsl(210, 30%, 20%,);
+      border-radius: 0.8rem;
     }
 
     &--game {

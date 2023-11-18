@@ -25,10 +25,10 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 const isOpen = ref(false);
-const showModal = ref(false);
+
 const navLinks = [
     { text: 'Jeu' },
     { text: 'À Propos' }
@@ -45,7 +45,6 @@ const closeNav = () => {
 
 const onGameLinkClicked = (linkText) => {
     if (linkText === 'Jeu') {
-        showModal.value = true;
         emits('gameClicked');
         scrollToTop();
         closeNav();
@@ -60,13 +59,6 @@ const scrollToTop = () => {
     window.scrollTo(0, 0);
 };
 
-watch(showModal, (newValue) => {
-    if (newValue) {
-        document.body.style.overflowY = 'hidden';
-    } else {
-        document.body.style.overflowY = 'auto';
-    }
-});
 </script>
 
 <style lang="scss">

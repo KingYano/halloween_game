@@ -13,9 +13,10 @@ import { ref } from 'vue';
 const showGameModal = ref(false);
 const currentSection = ref('game');
 
-const toggleGameModal = () => {
-  currentSection.value = 'game';
+const toggleGameModal = (section) => {
+  currentSection.value = section;
   showGameModal.value = !showGameModal.value;
+
   if (showGameModal.value) {
     document.body.style.overflowY = 'hidden';
   } else {
@@ -26,6 +27,12 @@ const toggleGameModal = () => {
 const handleSectionSelected = (section) => {
     currentSection.value = section;
     showGameModal.value = true;
+
+    if (showGameModal.value) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'auto';
+    }
 };
 
 const handleModalClose = () => {
