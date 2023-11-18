@@ -24,11 +24,14 @@
         }
 
         &__legal-right {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
 
         &__info {
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
             &--contact {
                 height: 80%;
@@ -42,7 +45,7 @@
                     text-decoration: none;
                     border: 1px solid #ffe8ec;
                     border-radius: 50% 50%;
-                    font-size: 1rem;
+                    font-size: .6rem;
                     padding: 11px;
 
                     &:hover {
@@ -70,8 +73,14 @@
                     gap: 80px;
                     justify-content: center;
                     align-items: center;
+
+                    a {
+                        font-size: 1rem;
+                    }
                 }
             }
+
+            
         }
     }
 </style>
