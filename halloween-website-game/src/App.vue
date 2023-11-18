@@ -1,7 +1,7 @@
 <template>
-  <HeaderNavigation @gameClicked="toggleGameModal"></HeaderNavigation>
+  <HeaderNavigation @sectionSelected="handleSectionSelected" @gameClicked="toggleGameModal"></HeaderNavigation>
   <HomeSection></HomeSection>
-  <GameModal v-if="showGameModal" @close="handleModalClose"></GameModal>
+  <GameModal :section="currentSection" v-if="showGameModal" @close="handleModalClose"></GameModal>
 </template>
 
 <script setup>
@@ -11,14 +11,24 @@ import GameModal from './components/GameModal.vue';
 import { ref } from 'vue';
 
 const showGameModal = ref(false);
+const currentSection = ref('game');
+console.log('mdr', currentSection.value);
 
 const toggleGameModal = () => {
+  currentSection.value = 'game';
   showGameModal.value = !showGameModal.value;
   if (showGameModal.value) {
     document.body.style.overflowY = 'hidden';
   } else {
     document.body.style.overflowY = 'auto';
   }
+};
+
+const handleSectionSelected = (section) => {
+    currentSection.value = section;
+  console.log('mdr222', currentSection.value);
+
+    showGameModal.value = true;
 };
 
 const handleModalClose = () => {

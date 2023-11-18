@@ -1,17 +1,26 @@
 <template>
-  <div class="modal__game XD">
+  <div class="modal__section">
     <div class="modal__close" v-on:click="closeModal">
         <i class="ri-close-line"></i>
     </div>
-    <GameSection></GameSection>
+    <div class="modal__section--about"  v-if="props.section === 'about'">
+      <AboutSection></AboutSection>
+    </div>
+    <div v-else class="modal__section--game">
+      <GameSection></GameSection>
+    </div>
   </div>
 </template>
 
 <script setup>
 import GameSection from './GameSection.vue';
-import { defineEmits  } from 'vue';
+import AboutSection from './AboutSection.vue';
 
 const emits = defineEmits(['close']);
+
+const props = defineProps({
+  section: String
+});
 
 const closeModal = () => {
     emits('close');
@@ -20,7 +29,7 @@ const closeModal = () => {
 
 <style lang="scss">
 .modal {
-  &__game {
+  &__section {
     position: absolute;
     top: 0;
     width: 100%;
@@ -30,6 +39,20 @@ const closeModal = () => {
     justify-content: center;
     align-items: center;
     z-index: 2;
+
+    &--about {
+      height: 250px;
+      width: 500px;
+      background: red;
+    }
+
+    &--game {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__close {

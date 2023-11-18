@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineEmits } from 'vue';
+import { ref, watch } from 'vue';
 
 const isOpen = ref(false);
 const showModal = ref(false);
@@ -47,6 +47,10 @@ const onGameLinkClicked = (linkText) => {
     if (linkText === 'Jeu') {
         showModal.value = true;
         emits('gameClicked');
+        scrollToTop();
+        closeNav();
+    } else {
+        emits('sectionSelected', 'about');
         scrollToTop();
         closeNav();
     }
