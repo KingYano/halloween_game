@@ -15,6 +15,9 @@ The basic visuals were sourced from @Bedimcode, and the game visuals were genera
 - Sass for styling.
 - DALL·E 3 for design.
 
+# Online website:
+https://halloween-game-kingyano.netlify.app/
+
 # Mockup Desktop and Mobile : 
 
 ![image](https://github.com/KingYano/halloween_game/assets/79844764/0a3e3212-03f5-46a9-900c-c5254f82b82c)
